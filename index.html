@@ -3,25 +3,26 @@
 <head>
 	<title>Simple ToDo App</title>
 	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
 	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body ng-app="myApp" ng-controller="toDoController">
+<body ng-app="myApp" ng-controller="toDoCtrl">
 	<div class="container">
 		<div class="panel panel-info">
 			<div class="panel-heading">Add ToDo Item</div>
 			<div class="panel-body">
 				<div>
 					<label for="toDoItem">To Do Item: </label></br>
-					<input type="text" ng-model="toDo.newToDo" id="toDoItem">
+					<input type="text" ng-model="toDo.title" id="toDoItem">
 				</div>
 				<div>
 					<label for"toDoPriority">Priority: </label></br>
 					<select ng-model="toDo.priority" id="toDoPriority">
-						<option value="1">1. Urgent</option>
-						<option value="2">2. Very High</option>
-						<option value="3">3. High</option>
-						<option value="4">4. Moderate</option>
-						<option value="5">5. Low</option>
+						<option value="1. Urgent">1. Urgent</option>
+						<option value="2. Very High">2. Very High</option>
+						<option value="3. High">3. High</option>
+						<option value="4. Moderate">4. Moderate</option>
+						<option value="5. Low">5. Low</option>
 					</select>
 				</div>
 			</div>
@@ -37,10 +38,26 @@
 				<div class="btn-group" role="group">
 				  <button type="button" class="btn btn-primary" ng-click="sortToDo('priority')">Order by Highest Priority</button>
 				  <button type="button" class="btn btn-primary" ng-click="sortToDo('-priority')">Order by Lowest Priority</button>
-				  <button type="button" class="btn btn-primary" ng-click="sortToDo('newToDo')">Order Alphabetically</button>
+				  <button type="button" class="btn btn-primary" ng-click="sortToDo('title')">Order Alphabetically</button>
 				</div>
-				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority == 1, veryhigh: item.priority == 2, high: item.priority == 3, moderate: item.priority == 4, low: item.priority == 5}">
-					<td>{{item.newToDo}}<span class="glyphicon glyphicon-remove pull-right" ng-click="deleteItem($index)"></span></td>
+
+				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority == '1. Urgent', veryhigh: item.priority == '2. Very High', high: item.priority == '3. High', moderate: item.priority == '4. Moderate', low: item.priority == '5. Low', complete: item.priority == '9. complete'}">
+
+					<td > 
+						<label for "editing-label" ng-hide="editing" ng-click="editing=true">{{item.title}}</label>
+						<!-- <label><input type="checkbox" id="complete" ng-click="item.priority='9. complete'">Done</label> -->
+						<input ng-blur="editing = false" ng-show="editing" class="editing-label" type="text" ng-model="item.title">
+						<select ng-blur="editing = false" ng-show="editing" ng-model="item.priority">
+							<option value="1. Urgent">1. Urgent</option>
+							<option value="2. Very High">2. Very High</option>
+							<option value="3. High">3. High</option>
+							<option value="4. Moderate">4. Moderate</option>
+							<option value="5. Low">5. Low</option>
+						</select>
+						<button ng-show="editing" class="btn btn-primary pull-right" ng-click="deleteItem($index)">Delete</button>
+						<button ng-show="editing" type="btn" class='btn btn-primary pull-right' ng-click=" editing = !editing">Save</button>						
+					</td>
+					
 				</tr>
 			</tbody>
 		</table>
@@ -50,6 +67,7 @@
 	<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>	
 	<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.js"></script>
+	<script type="text/javascript" src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

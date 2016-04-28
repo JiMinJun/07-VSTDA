@@ -1,40 +1,37 @@
-var myApp = angular.module('myApp', ['ui.sortable']);
+var myApp = angular.module('myApp', ['ui.sortable', 'xeditable']);
 
-myApp.controller("toDoController", [
+myApp.controller("toDoCtrl", [
 	'$scope', 
 	'$filter', 
 	function($scope, $filter){
 
-	$scope.sorting = {
-		current: 'priority'
-	};
 
 	$scope.toDoList = [
 		{
-			newToDo: "eat dinner",
-		 	priority: 2
+			title: "eat dinner",
+		 	priority: "1. Urgent"
 		},
 		{
-			newToDo: "have fun",
-			priority: 3
+			title: "have fun",
+			priority: "2. Very High"
 		},
 		{
-			newToDo: "buy milk",
-			priority : 1
+			title: "buy milk",
+			priority : "3. High"
 		},
 		{
-			newToDo: "buy eggs",
-			priority : 4
+			title: "buy eggs",
+			priority : "4. Moderate"
 		},
 		{
-			newToDo: "finish project",
-			priority :5
+			title: "finish project",
+			priority : "5. Low"
 		}
 	];
 
 	$scope.addNewItem = function(newItem) {
 		$scope.toDoList.forEach(function(element) {
-			if(newItem.newToDo === element.newToDo) {
+			if(newItem.title === element.title) {
 				alert('ToDo item already exists');
 				return;
 			}
@@ -54,5 +51,8 @@ myApp.controller("toDoController", [
         console.log($scope.toDoList);
    
     };
-
+    
 }]);
+
+/*
+<select ng-options="priority as item.priority for item in toDoList" ng-show="editing" ng-model="item.priority"></select>*/
