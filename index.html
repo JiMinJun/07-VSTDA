@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<title>Simple ToDo App</title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body ng-app="myApp" ng-controller="toDoController">
+	<div class="container">
+		<div class="panel panel-info">
+			<div class="panel-heading">Add ToDo Item</div>
+			<div class="panel-body">
+				<div>
+					<label for="toDoItem">To Do Item: </label></br>
+					<input type="text" ng-model="toDo.newToDo" id="toDoItem">
+				</div>
+				<div>
+					<label for"toDoPriority">Priority: </label></br>
+					<select ng-model="toDo.priority" id="toDoPriority">
+						<option value="1">1. Urgent</option>
+						<option value="2">2. Very High</option>
+						<option value="3">3. High</option>
+						<option value="4">4. Moderate</option>
+						<option value="5">5. Low</option>
+					</select>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<button type="button" class="btn btn-primary" ng-click="addNewItem(toDo)">Add ToDo</button>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<table class="table table-bordered">
+			<thead><td><b>ToDo List: <b></td></thead>
+			<tbody ui-sortable ng-model="toDoList">
+				<div class="btn-group" role="group">
+				  <button type="button" class="btn btn-primary" ng-click="sortToDo('priority')">Order by Highest Priority</button>
+				  <button type="button" class="btn btn-primary" ng-click="sortToDo('-priority')">Order by Lowest Priority</button>
+				  <button type="button" class="btn btn-primary" ng-click="sortToDo('newToDo')">Order Alphabetically</button>
+				</div>
+				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority == 1, veryhigh: item.priority == 2, high: item.priority == 3, moderate: item.priority == 4, low: item.priority == 5}">
+					<td>{{item.newToDo}}<span class="glyphicon glyphicon-remove pull-right" ng-click="deleteItem($index)"></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+	<script type="text/javascript" src="bower_components/angular/angular.js"></script>	
+	<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+</body>
+</html>
