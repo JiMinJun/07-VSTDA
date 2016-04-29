@@ -82,7 +82,7 @@ myApp.controller("toDoCtrl", [
     	});
     };
 
-    $scope.saveTitle = function(id, newTitle) {
+    $scope.saveTitle = function(id, newTitle, newPriority) {
     	if(!newTitle) {
     		alert("Not a valid input");
     		return;
@@ -90,6 +90,10 @@ myApp.controller("toDoCtrl", [
     	$scope.toDoList.find(function(element){
     		return element.id === id;
     	}).title = newTitle;
+
+    	$scope.toDoList.find(function(element){
+    		return element.id === id;
+    	}).priority = newPriority;
      };
 
 }]);

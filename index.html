@@ -41,14 +41,14 @@
 				  <button type="button" class="btn btn-primary" ng-click="sortToDo('title')">Order Alphabetically</button>
 				</div>
 
-				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority === 1, veryhigh: item.priority === 2, high: item.priority === 3, moderate: item.priority === 4, low: item.priority === 5, complete: item.priority === 9 }">
+				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority == 1, veryhigh: item.priority == 2, high: item.priority == 3, moderate: item.priority == 4, low: item.priority == 5, complete: item.priority == 9 }">
 
 					<td ng-click="closeAllOtherItems(item.id)"> 
 						<label for "editing-label" ng-click="item.isBeingEdited = true">{{item.title}}</label>
 						<!-- <label><input type="checkbox" id="complete" ng-click="item.priority='9. complete'">Done</label> -->
 						<div ng-show="item.isBeingEdited">
 							<input class="editing-label" type="text" ng-model="item.titleProgress">
-							<select ng-model="item.priority">
+							<select ng-model="item.newPriority">
 								<option value="1">1. Urgent</option>
 								<option value="2">2. Very High</option>
 								<option value="3">3. High</option>
@@ -56,7 +56,7 @@
 								<option value="5">5. Low</option>
 							</select>
 							<button class="btn btn-primary pull-right" ng-click="deleteItem($index)">Delete</button>
-							<button type="btn" class='btn btn-primary pull-right' ng-click="saveTitle(item.id, item.titleProgress)" >Save</button>		
+							<button type="btn" class='btn btn-primary pull-right' ng-click="saveTitle(item.id, item.titleProgress, item.newPriority)" >Save</button>		
 						</div>				
 					</td>
 					
