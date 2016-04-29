@@ -38,7 +38,12 @@ myApp.controller("toDoCtrl", [
 	var id = $scope.toDoList.length;
 
 	$scope.addNewItem = function(newItem) {
+		if(!newItem || isNaN(newItem.priority)) {
+			alert("ToDo item is incomplete");
+			return;
+		}
 		$scope.toDoList.forEach(function(element) {
+
 			if(newItem.title === element.title) {
 				alert('ToDo item already exists');
 				return;
@@ -78,6 +83,10 @@ myApp.controller("toDoCtrl", [
     };
 
     $scope.saveTitle = function(id, newTitle) {
+    	if(!newTitle) {
+    		alert("Not a valid input");
+    		return;
+    	}
     	$scope.toDoList.find(function(element){
     		return element.id === id;
     	}).title = newTitle;
