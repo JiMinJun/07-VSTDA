@@ -18,11 +18,11 @@
 				<div>
 					<label for"toDoPriority">Priority: </label></br>
 					<select ng-model="toDo.priority" id="toDoPriority">
-						<option value="1. Urgent">1. Urgent</option>
-						<option value="2. Very High">2. Very High</option>
-						<option value="3. High">3. High</option>
-						<option value="4. Moderate">4. Moderate</option>
-						<option value="5. Low">5. Low</option>
+						<option value="1">1. Urgent</option>
+						<option value="2">2. Very High</option>
+						<option value="3">3. High</option>
+						<option value="4">4. Moderate</option>
+						<option value="5">5. Low</option>
 					</select>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<table class="table table-bordered">
+		<table id="toDoTable" class="table table-bordered" click-outside="closeTable()">
 			<thead><td><b>ToDo List: <b></td></thead>
 			<tbody ui-sortable ng-model="toDoList">
 				<div class="btn-group" role="group">
@@ -41,21 +41,23 @@
 				  <button type="button" class="btn btn-primary" ng-click="sortToDo('title')">Order Alphabetically</button>
 				</div>
 
-				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority == '1. Urgent', veryhigh: item.priority == '2. Very High', high: item.priority == '3. High', moderate: item.priority == '4. Moderate', low: item.priority == '5. Low', complete: item.priority == '9. complete'}">
+				<tr ng-repeat="item in toDoList" ng-class="{urgent: item.priority === 1, veryhigh: item.priority === 2, high: item.priority === 3, moderate: item.priority === 4, low: item.priority === 5, complete: item.priority === 9 }">
 
-					<td > 
-						<label for "editing-label" ng-hide="editing" ng-click="editing=true">{{item.title}}</label>
+					<td ng-click="closeAllOtherItems(item.id)"> 
+						<label for "editing-label" ng-click="item.isBeingEdited = true">{{item.title}}</label>
 						<!-- <label><input type="checkbox" id="complete" ng-click="item.priority='9. complete'">Done</label> -->
-						<input ng-blur="editing = false" ng-show="editing" class="editing-label" type="text" ng-model="item.title">
-						<select ng-blur="editing = false" ng-show="editing" ng-model="item.priority">
-							<option value="1. Urgent">1. Urgent</option>
-							<option value="2. Very High">2. Very High</option>
-							<option value="3. High">3. High</option>
-							<option value="4. Moderate">4. Moderate</option>
-							<option value="5. Low">5. Low</option>
-						</select>
-						<button ng-show="editing" class="btn btn-primary pull-right" ng-click="deleteItem($index)">Delete</button>
-						<button ng-show="editing" type="btn" class='btn btn-primary pull-right' ng-click=" editing = !editing">Save</button>						
+						<div ng-show="item.isBeingEdited">
+							<input class="editing-label" type="text" ng-model="item.titleProgress">
+							<select ng-model="item.priority">
+								<option value="1">1. Urgent</option>
+								<option value="2">2. Very High</option>
+								<option value="3">3. High</option>
+								<option value="4">4. Moderate</option>
+								<option value="5">5. Low</option>
+							</select>
+							<button class="btn btn-primary pull-right" ng-click="deleteItem($index)">Delete</button>
+							<button type="btn" class='btn btn-primary pull-right' ng-click="saveTitle(item.id, item.titleProgress)" >Save</button>		
+						</div>				
 					</td>
 					
 				</tr>
@@ -68,6 +70,8 @@
 	<script type="text/javascript" src="bower_components/angular/angular.js"></script>	
 	<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.js"></script>
 	<script type="text/javascript" src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+	<script type="text/javascript" src="bower_components/angular-click-outside/clickoutside.directive.js"></script>
+
 	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
